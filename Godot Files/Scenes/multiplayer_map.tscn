@@ -1,0 +1,39 @@
+[gd_scene load_steps=6 format=3 uid="uid://dsqtnbbtn1chc"]
+
+[ext_resource type="PackedScene" uid="uid://b5rrfkuurg01s" path="res://Scenes/wall.tscn" id="1_1v6ow"]
+[ext_resource type="PackedScene" uid="uid://bstmyxr78cyia" path="res://Scenes/player.tscn" id="2_1ycna"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_i17qu"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_chsfm"]
+sky_material = SubResource("ProceduralSkyMaterial_i17qu")
+
+[sub_resource type="Environment" id="Environment_8etk6"]
+background_mode = 2
+sky = SubResource("Sky_chsfm")
+tonemap_mode = 2
+glow_enabled = true
+
+[node name="MultiplayerMap" type="Node3D"]
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_8etk6")
+
+[node name="WallsAndFloors" type="Node" parent="."]
+
+[node name="Wall" parent="WallsAndFloors" instance=ExtResource("1_1v6ow")]
+transform = Transform3D(1, 0, 0, 0, -2.18557e-07, -1, 0, 5, -4.37114e-08, 0, -0.5, -5)
+
+[node name="Wall2" parent="WallsAndFloors" instance=ExtResource("1_1v6ow")]
+transform = Transform3D(-8.74228e-08, 0, 1, 0, 1, 0, -2, 0, -4.37114e-08, 6.656, 1, 0)
+
+[node name="Wall3" parent="WallsAndFloors" instance=ExtResource("1_1v6ow")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.79709, -9.42513)
+
+[node name="Player" parent="." instance=ExtResource("2_1ycna")]
