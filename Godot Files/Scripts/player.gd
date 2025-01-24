@@ -23,12 +23,19 @@ var _current_rotation : float
 var _tilt_input: float = 0.0
 var jump_ready: bool = true
 
+func _enter_tree():
+	set_multiplayer_authority(str(name).to_int())
+
 func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-	for i in PLAYERMODEL.get_children():
-		i.set_layer_mask_value(1, false)
+	CAMERA_CONTROLLER.current = is_multiplayer_authority()
+	if is_multiplayer_authority():
+		for i in PLAYERMODEL.get_children():
+			i.set_layer_mask_value(1, false)
 
 func _unhandled_input(event):
+	if not is_multiplayer_authority():
+		return
 	_mouse_input = event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED
 	if _mouse_input:
 		_rotation_input = -event.relative.x * MOUSE_SENSITIVITY
@@ -62,6 +69,8 @@ func _physics_process(delta):
 	_update_camera(delta)
 
 func _update_camera(delta):
+	if not is_multiplayer_authority():
+		return
 	_current_rotation = _rotation_input
 	_mouse_rotation.x += _tilt_input * delta
 	_mouse_rotation.x = clamp(_mouse_rotation.x, TILT_LOWER_LIMIT, TILT_UPPER_LIMIT)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://bstmyxr78cyia"]
+[gd_scene load_steps=10 format=3 uid="uid://bstmyxr78cyia"]
 
 [ext_resource type="Script" path="res://Scripts/player.gd" id="1_x2rg4"]
 [ext_resource type="Script" path="res://Scripts/PlayerStateMachine.gd" id="2_6vqtu"]
@@ -10,15 +10,24 @@
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_qob16"]
 
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_qcmea"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+
 [node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("CAMERA_CONTROLLER", "PLAYERMODEL", "SETTINGSMENU")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+collision_layer = 2
 script = ExtResource("1_x2rg4")
 CAMERA_CONTROLLER = NodePath("CameraController/Camera3D")
 PLAYERMODEL = NodePath("player_model")
 SETTINGSMENU = NodePath("SettingsMenu")
 
 [node name="player_model" parent="." instance=ExtResource("2_o7d3s")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, -1, 0)
 
 [node name="Hurtbox" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_qob16")
@@ -27,7 +36,7 @@ shape = SubResource("CapsuleShape3D_qob16")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.85, 0)
 
 [node name="Camera3D" type="Camera3D" parent="CameraController"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 
 [node name="PlayerStateMachine" type="Node" parent="." node_paths=PackedStringArray("CURRENT_STATE")]
 script = ExtResource("2_6vqtu")
@@ -45,3 +54,6 @@ script = ExtResource("5_l4onx")
 
 [node name="SettingsMenu" parent="." instance=ExtResource("7_58hv0")]
 visible = false
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_qcmea")

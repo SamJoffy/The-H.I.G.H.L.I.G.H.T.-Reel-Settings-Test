@@ -48,7 +48,7 @@ corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 
-[node name="PlayMenu" type="Control"]
+[node name="PlayMenu" type="Control" node_paths=PackedStringArray("ADDRESSENTRY")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -56,6 +56,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_0tt47")
+ADDRESSENTRY = NodePath("Join Remote Stuff/AddressEntry")
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 1
@@ -145,3 +146,5 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_16hx3")
 text = "Join Remote"
 
 [connection signal="pressed" from="Buttons/Host" to="." method="_on_host_pressed"]
+[connection signal="pressed" from="Buttons/Join Local" to="." method="_on_join_local_pressed"]
+[connection signal="pressed" from="Join Remote Stuff/Join Remote" to="." method="_on_join_remote_pressed"]

@@ -18,12 +18,15 @@ func _ready():
 	CURRENT_STATE.enter(CURRENT_STATE)
 
 func _process(delta):
+	if not is_multiplayer_authority():
+		return
 	CURRENT_STATE.update(delta)
 	#Global.debug.add_property("Current State", CURRENT_STATE.name, 3)
 
 func _physics_process(delta):
-	if is_multiplayer_authority():
-		CURRENT_STATE.physics_update(delta)
+	if not is_multiplayer_authority():
+		return
+	CURRENT_STATE.physics_update(delta)
 
 func on_child_transition(new_state_name: StringName) -> void:
 	var new_state = states.get(new_state_name)
