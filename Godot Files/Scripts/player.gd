@@ -65,6 +65,15 @@ func update_input(speed: float, acceleration: float, deceleration: float) -> voi
 			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 			SETTINGSMENU.visible = true
 
+func _notification(what):
+	match what:
+		NOTIFICATION_WM_WINDOW_FOCUS_OUT:
+			SETTINGSMENU.visible = true
+			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+		NOTIFICATION_WM_WINDOW_FOCUS_IN:
+			SETTINGSMENU.visible = true
+			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+
 func _physics_process(delta):
 	_update_camera(delta)
 
