@@ -1,4 +1,6 @@
-[gd_scene format=3 uid="uid://c5qbgq8xcgw01"]
+[gd_scene load_steps=2 format=3 uid="uid://c5qbgq8xcgw01"]
+
+[ext_resource type="Script" path="res://Scripts/settings_menu.gd" id="1_8ri8k"]
 
 [node name="SettingsMenu" type="Control"]
 layout_mode = 3
@@ -7,9 +9,12 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_8ri8k")
 
-[node name="Button" type="Button" parent="."]
+[node name="Exit" type="Button" parent="."]
 layout_mode = 0
 offset_right = 308.0
 offset_bottom = 160.0
 text = "Exit"
+
+[connection signal="pressed" from="Exit" to="." method="_on_exit_pressed"]

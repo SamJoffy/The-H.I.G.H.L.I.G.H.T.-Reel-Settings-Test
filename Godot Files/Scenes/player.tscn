@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://bstmyxr78cyia"]
+[gd_scene load_steps=9 format=3 uid="uid://bstmyxr78cyia"]
 
 [ext_resource type="Script" path="res://Scripts/player.gd" id="1_x2rg4"]
 [ext_resource type="Script" path="res://Scripts/PlayerStateMachine.gd" id="2_6vqtu"]
@@ -6,14 +6,16 @@
 [ext_resource type="Script" path="res://Scripts/IdlePlayerState.gd" id="4_if5ij"]
 [ext_resource type="Script" path="res://Scripts/RunningPlayerState.gd" id="4_lm5y8"]
 [ext_resource type="Script" path="res://Scripts/DashingPlayerState.gd" id="5_l4onx"]
+[ext_resource type="PackedScene" uid="uid://c5qbgq8xcgw01" path="res://Scenes/settings_menu.tscn" id="7_58hv0"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_qob16"]
 
-[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("CAMERA_CONTROLLER", "PLAYERMODEL")]
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("CAMERA_CONTROLLER", "PLAYERMODEL", "SETTINGSMENU")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 script = ExtResource("1_x2rg4")
 CAMERA_CONTROLLER = NodePath("CameraController/Camera3D")
 PLAYERMODEL = NodePath("player_model")
+SETTINGSMENU = NodePath("SettingsMenu")
 
 [node name="player_model" parent="." instance=ExtResource("2_o7d3s")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
@@ -40,3 +42,6 @@ DASHINGPLAYERSTATE = NodePath("../DashingPlayerState")
 
 [node name="DashingPlayerState" type="Node" parent="PlayerStateMachine"]
 script = ExtResource("5_l4onx")
+
+[node name="SettingsMenu" parent="." instance=ExtResource("7_58hv0")]
+visible = false

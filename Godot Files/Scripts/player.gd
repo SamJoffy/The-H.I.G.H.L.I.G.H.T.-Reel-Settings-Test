@@ -5,11 +5,12 @@ extends CharacterBody3D
 
 @export var JUMP_VELOCITY: float = 6.0
 @export var SPEED: float = 10.0
-@export var MOUSE_SENSITIVITY : float = 1.0
+@export var MOUSE_SENSITIVITY : float = 1.3
 @export var TILT_LOWER_LIMIT := deg_to_rad(-90.0)
 @export var TILT_UPPER_LIMIT := deg_to_rad(90.0)
 @export var CAMERA_CONTROLLER : Camera3D
 @export var PLAYERMODEL : Node3D
+@export var SETTINGSMENU : Control
 
 
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
@@ -49,6 +50,13 @@ func update_input(speed: float, acceleration: float, deceleration: float) -> voi
 		velocity.y = JUMP_VELOCITY
 		await get_tree().create_timer(0.2).timeout
 		jump_ready = true
+	elif Input.is_action_just_pressed("escape"):
+		if SETTINGSMENU.visible:
+			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+			SETTINGSMENU.visible = false
+		else:
+			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+			SETTINGSMENU.visible = true
 
 func _physics_process(delta):
 	_update_camera(delta)
