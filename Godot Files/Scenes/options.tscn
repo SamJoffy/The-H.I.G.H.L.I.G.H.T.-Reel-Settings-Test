@@ -1,4 +1,7 @@
-[gd_scene format=3 uid="uid://c0ycv5tnl0734"]
+[gd_scene load_steps=2 format=3 uid="uid://c0ycv5tnl0734"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_268co"]
+bg_color = Color(0.176471, 0.176471, 0.176471, 0.803922)
 
 [node name="Options" type="Control"]
 layout_mode = 3
@@ -7,3 +10,68 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme_override_constants/separation = 5
+alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Controls" type="Button" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 26
+text = "Controls"
+
+[node name="Accessibility" type="Button" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 26
+text = "Accessibility"
+
+[node name="ControlsSettings" type="Panel" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_268co")
+
+[node name="SensitivitySettings" type="HBoxContainer" parent="VBoxContainer/ControlsSettings"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.03
+anchor_right = 1.0
+anchor_bottom = 0.13
+offset_left = 20.0
+offset_right = -20.0
+
+[node name="Label" type="Label" parent="VBoxContainer/ControlsSettings/SensitivitySettings"]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 26
+text = "Sensitivity:"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HSlider" type="HSlider" parent="VBoxContainer/ControlsSettings/SensitivitySettings"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+
+[node name="CurrentSensitivity" type="Label" parent="VBoxContainer/ControlsSettings/SensitivitySettings"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 26
+text = "100"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AccessibilitySettings" type="Panel" parent="VBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_268co")

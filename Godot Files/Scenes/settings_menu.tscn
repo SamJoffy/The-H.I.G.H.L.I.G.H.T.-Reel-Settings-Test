@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://c5qbgq8xcgw01"]
+[gd_scene load_steps=3 format=3 uid="uid://c5qbgq8xcgw01"]
 
 [ext_resource type="Script" path="res://Scripts/settings_menu.gd" id="1_8ri8k"]
+[ext_resource type="PackedScene" uid="uid://c0ycv5tnl0734" path="res://Scenes/options.tscn" id="2_ln1sc"]
 
 [node name="SettingsMenu" type="Control"]
 layout_mode = 3
@@ -11,10 +12,35 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_8ri8k")
 
-[node name="Exit" type="Button" parent="."]
-layout_mode = 0
+[node name="Menu" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ExitButton" type="Button" parent="Menu"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = 342.0
 offset_right = 308.0
-offset_bottom = 160.0
+offset_bottom = 502.0
+grow_vertical = 2
 text = "Exit"
 
-[connection signal="pressed" from="Exit" to="." method="_on_exit_pressed"]
+[node name="OptionsButton" type="Button" parent="Menu"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = 94.0
+offset_right = 308.0
+offset_bottom = 254.0
+grow_vertical = 2
+text = "Options"
+
+[node name="Options" parent="." instance=ExtResource("2_ln1sc")]
+visible = false
+layout_mode = 1
+
+[connection signal="pressed" from="Menu/ExitButton" to="." method="_on_exit_pressed"]
