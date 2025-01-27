@@ -57,13 +57,14 @@ func update_input(speed: float, acceleration: float, deceleration: float) -> voi
 		velocity.y = JUMP_VELOCITY
 		await get_tree().create_timer(0.2).timeout
 		jump_ready = true
+	# Handle opening and closing SettingsMenu
 	elif Input.is_action_just_pressed("escape"):
-		if SETTINGSMENU.visible:
-			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-			SETTINGSMENU.visible = false
-		else:
+		if not SETTINGSMENU.visible:
 			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 			SETTINGSMENU.visible = true
+		elif SETTINGSMENU.getMenuVisible():
+			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+			SETTINGSMENU.visible = false
 
 func _notification(what):
 	match what:
@@ -101,3 +102,6 @@ func update_velocity() -> void:
 
 func update_gravity(delta) -> void:
 	velocity.y -= gravity * delta
+
+func _on_settings_menu_sensitivity_changed(sens):
+	MOUSE_SENSITIVITY = 1 + (sens/100)

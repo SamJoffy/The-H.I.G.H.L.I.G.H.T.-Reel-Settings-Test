@@ -56,3 +56,5 @@ visible = false
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_qcmea")
+
+[connection signal="sensitivityChanged" from="SettingsMenu" to="." method="_on_settings_menu_sensitivity_changed"]

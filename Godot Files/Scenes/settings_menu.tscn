@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://Scripts/settings_menu.gd" id="1_8ri8k"]
 [ext_resource type="PackedScene" uid="uid://c0ycv5tnl0734" path="res://Scenes/options.tscn" id="2_ln1sc"]
 
-[node name="SettingsMenu" type="Control"]
+[node name="SettingsMenu" type="Control" node_paths=PackedStringArray("OPTIONS", "MENU")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -11,6 +11,8 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_8ri8k")
+OPTIONS = NodePath("Options")
+MENU = NodePath("Menu")
 
 [node name="Menu" type="Control" parent="."]
 anchors_preset = 0
@@ -44,3 +46,6 @@ visible = false
 layout_mode = 1
 
 [connection signal="pressed" from="Menu/ExitButton" to="." method="_on_exit_pressed"]
+[connection signal="pressed" from="Menu/OptionsButton" to="." method="_on_options_button_pressed"]
+[connection signal="optionsExited" from="Options" to="." method="_on_options_options_exited"]
+[connection signal="sensitivity_changed" from="Options" to="." method="_on_options_sensitivity_changed"]

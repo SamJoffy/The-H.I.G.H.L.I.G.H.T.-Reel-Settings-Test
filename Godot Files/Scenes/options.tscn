@@ -1,15 +1,22 @@
-[gd_scene load_steps=2 format=3 uid="uid://c0ycv5tnl0734"]
+[gd_scene load_steps=3 format=3 uid="uid://c0ycv5tnl0734"]
+
+[ext_resource type="Script" path="res://Scripts/options.gd" id="1_uo7e3"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_268co"]
 bg_color = Color(0.176471, 0.176471, 0.176471, 0.803922)
 
-[node name="Options" type="Control"]
+[node name="Options" type="Control" node_paths=PackedStringArray("CONTROLSSETTINGS", "ACCESSIBILITYSETTINGS", "CURRENTSENSITIVITY", "SENSITIVITYSLIDER")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_uo7e3")
+CONTROLSSETTINGS = NodePath("VBoxContainer/ControlsSettings")
+ACCESSIBILITYSETTINGS = NodePath("VBoxContainer/AccessibilitySettings")
+CURRENTSENSITIVITY = NodePath("VBoxContainer/ControlsSettings/SensitivitySettings/CurrentSensitivity")
+SENSITIVITYSLIDER = NodePath("VBoxContainer/ControlsSettings/SensitivitySettings/SensitivitySlider")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
@@ -57,10 +64,13 @@ text = "Sensitivity:"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="HSlider" type="HSlider" parent="VBoxContainer/ControlsSettings/SensitivitySettings"]
+[node name="SensitivitySlider" type="HSlider" parent="VBoxContainer/ControlsSettings/SensitivitySettings"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
+min_value = 10.0
+step = 5.0
+value = 10.0
 
 [node name="CurrentSensitivity" type="Label" parent="VBoxContainer/ControlsSettings/SensitivitySettings"]
 custom_minimum_size = Vector2(100, 0)
@@ -75,3 +85,8 @@ visible = false
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_268co")
+
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/Controls" to="." method="_on_controls_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/Accessibility" to="." method="_on_accessibility_pressed"]
+[connection signal="drag_ended" from="VBoxContainer/ControlsSettings/SensitivitySettings/SensitivitySlider" to="." method="_on_sensitivity_slider_drag_ended"]
+[connection signal="value_changed" from="VBoxContainer/ControlsSettings/SensitivitySettings/SensitivitySlider" to="." method="_on_sensitivity_slider_value_changed"]
