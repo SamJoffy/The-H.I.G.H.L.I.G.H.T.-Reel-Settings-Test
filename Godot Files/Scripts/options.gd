@@ -44,3 +44,9 @@ func _process(delta):
 
 func getSettings():
 	return currentSensitivity
+
+func _on_blue_pressed():
+	print("Blue")
+
+func _on_red_pressed():
+	print("Red")
