@@ -13,6 +13,7 @@ var currentSensitivity: int
 
 signal sensitivity_changed(sens: int)
 signal optionsExited
+signal player_color_changed(color: GlobalItems.playerColors)
 
 func _ready():
 	currentSensitivity = DEFAULTSENSITIVITY
@@ -46,7 +47,7 @@ func getSettings():
 	return currentSensitivity
 
 func _on_blue_pressed():
-	print("Blue")
+	player_color_changed.emit(GlobalItems.playerColors.BLUE)
 
 func _on_red_pressed():
-	print("Red")
+	player_color_changed.emit(GlobalItems.playerColors.RED)

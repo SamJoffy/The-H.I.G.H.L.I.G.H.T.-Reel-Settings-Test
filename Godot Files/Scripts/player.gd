@@ -105,3 +105,6 @@ func update_gravity(delta) -> void:
 
 func _on_settings_menu_sensitivity_changed(sens):
 	MOUSE_SENSITIVITY = 1 + (sens/100)
+
+func _on_settings_menu_player_color_changed(color):
+	pass # Replace with function body.
