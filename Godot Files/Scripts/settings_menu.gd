@@ -22,6 +22,6 @@ func getMenuVisible():
 func _on_options_sensitivity_changed(sens):
 	sensitivityChanged.emit(sens)
 
-
 func _on_options_player_color_changed(color):
+	print("Emitting signal from settings menu")
 	playerColorChanged.emit(color)

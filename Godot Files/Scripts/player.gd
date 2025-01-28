@@ -23,6 +23,8 @@ var _current_rotation : float
 var _tilt_input: float = 0.0
 var jump_ready: bool = true
 
+signal playerColorChanged(color: GlobalItems.playerColors)
+
 func _enter_tree():
 	set_multiplayer_authority(str(name).to_int())
 
@@ -107,4 +109,8 @@ func _on_settings_menu_sensitivity_changed(sens):
 	MOUSE_SENSITIVITY = 1 + (sens/100)
 
 func _on_settings_menu_player_color_changed(color):
-	pass # Replace with function body.
+	print("Attempting to change color to: " + str(color) + " on player: " + str(self))
+	playerColorChanged.emit(color)
+
+func changeColor(color: GlobalItems.playerColors):
+	PLAYERMODEL.changeColor(color)

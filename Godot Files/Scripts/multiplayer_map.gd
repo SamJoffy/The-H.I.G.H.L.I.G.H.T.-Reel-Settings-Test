@@ -4,6 +4,7 @@ extends Node3D
 
 
 @export var player_scene : PackedScene
+@export var PLAYERS: Node
 
 var enet_peer = ENetMultiplayerPeer.new()
 const PORT: int = 9999
@@ -21,12 +22,15 @@ func startHost():
 func add_player(peer_id):
 	var player = player_scene.instantiate()
 	player.name = str(peer_id)
-	add_child(player)
+	PLAYERS.add_child(player)
+	if player.is_multiplayer_authority():
+		print("adding signal to " + str(peer_id))
+		player.playerColorChanged.connect(changePlayerColors)
 	#if player.is_multiplayer_authority():
 		#player.healthChanged.connect(update_health_bar)
 
 func remove_player(peer_id):
-	var player = get_node_or_null(str(peer_id))
+	var player = PLAYERS.get_node_or_null(str(peer_id))
 	if player:
 		player.queue_free()
 
@@ -53,3 +57,13 @@ func upnp_setup():
 		"UPNP Port Mapping Failed! Error %s" % map_result)
 	
 	print("Success! Join Address: %s" % upnp.query_external_address())
+
+func changePlayerColors(color: GlobalItems.playerColors):
+	print(str(color) + " changed")
+	for i in PLAYERS.get_children():
+		i.changeColor(color)
+
+func _on_multiplayer_spawner_spawned(node):
+	if node.is_multiplayer_authority():
+		print("Adding Signal to " + str(node))
+		node.playerColorChanged.connect(changePlayerColors)

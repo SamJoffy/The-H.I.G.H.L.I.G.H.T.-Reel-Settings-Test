@@ -17,9 +17,10 @@ sky = SubResource("Sky_chsfm")
 tonemap_mode = 2
 glow_enabled = true
 
-[node name="MultiplayerMap" type="Node3D"]
+[node name="MultiplayerMap" type="Node3D" node_paths=PackedStringArray("PLAYERS")]
 script = ExtResource("1_nr5pi")
 player_scene = ExtResource("2_1ycna")
+PLAYERS = NodePath("Players")
 
 [node name="Sun" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
@@ -41,4 +42,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.79709, -9.42513)
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
 _spawnable_scenes = PackedStringArray("res://Scenes/player.tscn")
-spawn_path = NodePath("..")
+spawn_path = NodePath("../Players")
+
+[node name="Players" type="Node" parent="."]
+
+[connection signal="spawned" from="MultiplayerSpawner" to="." method="_on_multiplayer_spawner_spawned"]

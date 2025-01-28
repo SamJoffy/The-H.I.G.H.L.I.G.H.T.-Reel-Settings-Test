@@ -1,5 +1,15 @@
-[gd_scene load_steps=2 format=3 uid="uid://58sbsm2dewe4"]
+[gd_scene load_steps=5 format=3 uid="uid://58sbsm2dewe4"]
 
 [ext_resource type="PackedScene" uid="uid://quhlc28kr5ou" path="res://Assets/player.glb" id="1_m3w2x"]
+[ext_resource type="Script" path="res://Scripts/player_model.gd" id="2_drlcs"]
+[ext_resource type="Material" uid="uid://bl4ir2fowghu5" path="res://Materials/BluePlayerMaterial.tres" id="2_gsys0"]
+[ext_resource type="Material" uid="uid://cyu2qktww706b" path="res://Materials/RedPlayerMaterial.tres" id="4_xpxy4"]
 
-[node name="player" instance=ExtResource("1_m3w2x")]
+[node name="player" node_paths=PackedStringArray("BODY") instance=ExtResource("1_m3w2x")]
+script = ExtResource("2_drlcs")
+BODY = NodePath("Body")
+BluePlayerColor = ExtResource("2_gsys0")
+RedPlayerColor = ExtResource("4_xpxy4")
+
+[node name="Body" parent="." index="0"]
+surface_material_override/0 = ExtResource("2_gsys0")
