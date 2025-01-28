@@ -10,6 +10,7 @@ extends Control
 const DEFAULTSENSITIVITY: int = 30
 
 var currentSensitivity: int
+var currentPlayerColor: GlobalItems.playerColors = GlobalItems.playerColors.RED
 
 signal sensitivity_changed(sens: int)
 signal optionsExited
@@ -19,6 +20,7 @@ func _ready():
 	currentSensitivity = DEFAULTSENSITIVITY
 	SENSITIVITYSLIDER.value = DEFAULTSENSITIVITY
 	CURRENTSENSITIVITY.text = str(DEFAULTSENSITIVITY)
+	player_color_changed.emit(currentPlayerColor)
 
 func _on_controls_pressed():
 	CONTROLSSETTINGS.visible = true
@@ -43,11 +45,23 @@ func _process(delta):
 		visible = false
 		optionsExited.emit()
 
+## returns the settings in the order [sensitivity, player color]
 func getSettings():
-	return currentSensitivity
+	return [currentSensitivity, currentPlayerColor]
 
 func _on_blue_pressed():
+	currentPlayerColor = GlobalItems.playerColors.BLUE
 	player_color_changed.emit(GlobalItems.playerColors.BLUE)
 
 func _on_red_pressed():
+	currentPlayerColor = GlobalItems.playerColors.RED
 	player_color_changed.emit(GlobalItems.playerColors.RED)
+
+func setPlayerSettings(settings):
+	currentSensitivity = settings[0]
+	CURRENTSENSITIVITY.text = str(settings[0])
+	SENSITIVITYSLIDER.value = settings[0]
+	sensitivity_changed.emit(settings[0])
+	
+	currentPlayerColor = settings[1]
+	player_color_changed.emit(settings[1])

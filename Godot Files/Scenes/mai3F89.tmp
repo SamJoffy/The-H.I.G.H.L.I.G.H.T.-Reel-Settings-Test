@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=3 uid="uid://benbj478yvd1k"]
 
-[ext_resource type="Script" path="res://Scripts/main_menu_script.gd" id="1_dvugo"]
+[ext_resource type="Script" path="res://Scripts/main_menu.gd" id="1_h3h7r"]
 [ext_resource type="Texture2D" uid="uid://dumpdiil1vd26" path="res://Assets/Background.png" id="1_mcehi"]
 [ext_resource type="PackedScene" uid="uid://c0ycv5tnl0734" path="res://Scenes/options.tscn" id="3_6mq3p"]
 
@@ -50,7 +50,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_dvugo")
+script = ExtResource("1_h3h7r")
 OPTIONSMENU = NodePath("Options")
 
 [node name="Panel" type="Panel" parent="."]

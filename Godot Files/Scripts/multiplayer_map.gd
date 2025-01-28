@@ -6,6 +6,8 @@ extends Node3D
 @export var player_scene : PackedScene
 @export var PLAYERS: Node
 
+var playerSettings
+
 var enet_peer = ENetMultiplayerPeer.new()
 const PORT: int = 9999
 
@@ -25,6 +27,7 @@ func add_player(peer_id):
 	PLAYERS.add_child(player)
 	if player.is_multiplayer_authority():
 		player.playerColorChanged.connect(changePlayerColors)
+		player.setPlayerSettings(playerSettings)
 		
 	for i in PLAYERS.get_children():
 		if i.is_multiplayer_authority():
@@ -68,5 +71,11 @@ func changePlayerColors(color: GlobalItems.playerColors):
 
 func _on_multiplayer_spawner_spawned(node):
 	if node.is_multiplayer_authority():
+		node.setPlayerSettings(playerSettings)
 		node.playerColorChanged.connect(changePlayerColors)
 		changePlayerColors(node.DEFAULTPLAYERCOLOR)
+
+#might have to be rpc
+func setPlayerSettings(settings):
+	print(settings)
+	playerSettings = settings

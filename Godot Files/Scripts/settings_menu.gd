@@ -1,6 +1,6 @@
 extends Control
 
-@export var OPTIONS: Options
+@export var OPTIONS: Control
 @export var MENU: Control
 
 signal sensitivityChanged(sens: int)
@@ -25,3 +25,6 @@ func _on_options_sensitivity_changed(sens):
 func _on_options_player_color_changed(color):
 	print("Emitting signal from settings menu")
 	playerColorChanged.emit(color)
+
+func setPlayerSettings(settings):
+	OPTIONS.setPlayerSettings(settings)

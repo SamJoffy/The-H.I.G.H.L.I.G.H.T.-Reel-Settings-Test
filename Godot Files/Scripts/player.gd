@@ -107,3 +107,6 @@ func _on_settings_menu_player_color_changed(color):
 
 func changeColor(color: GlobalItems.playerColors):
 	PLAYERMODEL.changeColor(color)
+
+func setPlayerSettings(settings):
+	SETTINGSMENU.setPlayerSettings(settings)
