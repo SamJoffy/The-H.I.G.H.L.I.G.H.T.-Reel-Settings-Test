@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bstmyxr78cyia"]
+[gd_scene load_steps=12 format=3 uid="uid://bstmyxr78cyia"]
 
 [ext_resource type="Script" path="res://Scripts/player.gd" id="1_x2rg4"]
 [ext_resource type="Script" path="res://Scripts/PlayerStateMachine.gd" id="2_6vqtu"]
@@ -7,8 +7,13 @@
 [ext_resource type="Script" path="res://Scripts/RunningPlayerState.gd" id="4_lm5y8"]
 [ext_resource type="Script" path="res://Scripts/DashingPlayerState.gd" id="5_l4onx"]
 [ext_resource type="PackedScene" uid="uid://c5qbgq8xcgw01" path="res://Scenes/settings_menu.tscn" id="7_58hv0"]
+[ext_resource type="Texture2D" uid="uid://01frajnxqxdd" path="res://Assets/Crosshair2.png" id="8_5qu3p"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_qob16"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_bqdnq"]
+texture = ExtResource("8_5qu3p")
+modulate_color = Color(1, 1, 1, 0.372549)
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_qcmea"]
 properties/0/path = NodePath(".:position")
@@ -50,6 +55,30 @@ DASHINGPLAYERSTATE = NodePath("../DashingPlayerState")
 
 [node name="DashingPlayerState" type="Node" parent="PlayerStateMachine"]
 script = ExtResource("5_l4onx")
+
+[node name="GUI" type="Control" parent="."]
+layout_mode = 3
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Crosshair" type="Panel" parent="GUI"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -15.0
+offset_top = -15.0
+offset_right = 15.0
+offset_bottom = 15.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_bqdnq")
 
 [node name="SettingsMenu" parent="." instance=ExtResource("7_58hv0")]
 visible = false
