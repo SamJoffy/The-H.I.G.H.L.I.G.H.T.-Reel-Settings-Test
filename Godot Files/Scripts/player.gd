@@ -23,6 +23,8 @@ var _current_rotation : float
 var _tilt_input: float = 0.0
 var jump_ready: bool = true
 
+var DEFAULTPLAYERCOLOR: GlobalItems.playerColors = GlobalItems.playerColors.RED
+
 signal playerColorChanged(color: GlobalItems.playerColors)
 
 func _enter_tree():
@@ -60,22 +62,13 @@ func update_input(speed: float, acceleration: float, deceleration: float) -> voi
 		await get_tree().create_timer(0.2).timeout
 		jump_ready = true
 	# Handle opening and closing SettingsMenu
-	elif Input.is_action_just_pressed("escape"):
+	elif Input.is_action_just_pressed("escape") and is_multiplayer_authority():
 		if not SETTINGSMENU.visible:
 			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 			SETTINGSMENU.visible = true
 		elif SETTINGSMENU.getMenuVisible():
 			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 			SETTINGSMENU.visible = false
-
-func _notification(what):
-	match what:
-		NOTIFICATION_WM_WINDOW_FOCUS_OUT:
-			SETTINGSMENU.visible = true
-			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-		NOTIFICATION_WM_WINDOW_FOCUS_IN:
-			SETTINGSMENU.visible = true
-			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 
 func _physics_process(delta):
 	_update_camera(delta)
@@ -109,7 +102,7 @@ func _on_settings_menu_sensitivity_changed(sens):
 	MOUSE_SENSITIVITY = 1 + (sens/100)
 
 func _on_settings_menu_player_color_changed(color):
-	print("Attempting to change color to: " + str(color) + " on player: " + str(self))
+	DEFAULTPLAYERCOLOR = color
 	playerColorChanged.emit(color)
 
 func changeColor(color: GlobalItems.playerColors):

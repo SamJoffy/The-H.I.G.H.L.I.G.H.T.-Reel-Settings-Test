@@ -24,8 +24,11 @@ func add_player(peer_id):
 	player.name = str(peer_id)
 	PLAYERS.add_child(player)
 	if player.is_multiplayer_authority():
-		print("adding signal to " + str(peer_id))
 		player.playerColorChanged.connect(changePlayerColors)
+		
+	for i in PLAYERS.get_children():
+		if i.is_multiplayer_authority():
+			changePlayerColors(i.DEFAULTPLAYERCOLOR)
 	#if player.is_multiplayer_authority():
 		#player.healthChanged.connect(update_health_bar)
 
@@ -65,5 +68,5 @@ func changePlayerColors(color: GlobalItems.playerColors):
 
 func _on_multiplayer_spawner_spawned(node):
 	if node.is_multiplayer_authority():
-		print("Adding Signal to " + str(node))
 		node.playerColorChanged.connect(changePlayerColors)
+		changePlayerColors(node.DEFAULTPLAYERCOLOR)
