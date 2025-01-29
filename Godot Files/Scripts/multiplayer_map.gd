@@ -65,7 +65,6 @@ func upnp_setup():
 	print("Success! Join Address: %s" % upnp.query_external_address())
 
 func changePlayerColors(color: GlobalItems.playerColors):
-	print(str(color) + " changed")
 	for i in PLAYERS.get_children():
 		i.changeColor(color)
 

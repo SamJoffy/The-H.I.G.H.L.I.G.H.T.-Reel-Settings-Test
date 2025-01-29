@@ -12,6 +12,8 @@ extends CharacterBody3D
 @export var PLAYERMODEL : Node3D
 @export var SETTINGSMENU : Control
 @export var GUILAYER : CanvasLayer
+@export var PRIMARYWEAPON: Weapon
+@export var WEAPONHITBOX: RayCast3D
 
 
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
@@ -23,6 +25,8 @@ var _camera_rotation : Vector3
 var _current_rotation : float
 var _tilt_input: float = 0.0
 var jump_ready: bool = true
+var health: int = 100
+var weaponReady: bool = true
 
 var DEFAULTPLAYERCOLOR: GlobalItems.playerColors = GlobalItems.playerColors.RED
 
@@ -70,6 +74,14 @@ func update_input(speed: float, acceleration: float, deceleration: float) -> voi
 		elif SETTINGSMENU.getMenuVisible():
 			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 			SETTINGSMENU.visible = false
+	if Input.is_action_pressed("shoot") and PRIMARYWEAPON.ISAUTOMATIC and weaponReady:
+		if WEAPONHITBOX.is_colliding():
+			WEAPONHITBOX.get_collider().hitPlayer.rpc_id(WEAPONHITBOX.get_collider().get_multiplayer_authority(), PRIMARYWEAPON.DAMAGE)
+		weaponReady = false
+		await get_tree().create_timer(60.0/PRIMARYWEAPON.RATEOFFIRE).timeout
+		weaponReady = true
+	elif Input.is_action_just_pressed("shoot") and not PRIMARYWEAPON.ISAUTOMATIC:
+		return
 
 func _physics_process(delta):
 	_update_camera(delta)
@@ -111,3 +123,10 @@ func changeColor(color: GlobalItems.playerColors):
 
 func setPlayerSettings(settings):
 	SETTINGSMENU.setPlayerSettings(settings)
+
+@rpc("any_peer")
+func hitPlayer(damage: int):
+	health -= damage
+	if health <= 0:
+		self.position = Vector3(0, 1, 0)
+		health = 100

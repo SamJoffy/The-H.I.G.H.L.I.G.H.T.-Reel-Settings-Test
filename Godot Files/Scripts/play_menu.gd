@@ -34,4 +34,3 @@ func _on_join_remote_pressed():
 
 func setSettings(settings):
 	playerSettings = settings
-	print(playerSettings)
