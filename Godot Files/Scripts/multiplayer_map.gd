@@ -75,7 +75,5 @@ func _on_multiplayer_spawner_spawned(node):
 		node.playerColorChanged.connect(changePlayerColors)
 		changePlayerColors(node.DEFAULTPLAYERCOLOR)
 
-#might have to be rpc
 func setPlayerSettings(settings):
-	print(settings)
 	playerSettings = settings

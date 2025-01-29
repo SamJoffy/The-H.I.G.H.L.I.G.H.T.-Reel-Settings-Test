@@ -11,6 +11,7 @@ extends CharacterBody3D
 @export var CAMERA_CONTROLLER : Camera3D
 @export var PLAYERMODEL : Node3D
 @export var SETTINGSMENU : Control
+@export var GUILAYER : CanvasLayer
 
 
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")

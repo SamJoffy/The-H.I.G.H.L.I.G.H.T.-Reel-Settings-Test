@@ -7,13 +7,9 @@
 [ext_resource type="Script" path="res://Scripts/RunningPlayerState.gd" id="4_lm5y8"]
 [ext_resource type="Script" path="res://Scripts/DashingPlayerState.gd" id="5_l4onx"]
 [ext_resource type="PackedScene" uid="uid://c5qbgq8xcgw01" path="res://Scenes/settings_menu.tscn" id="7_58hv0"]
-[ext_resource type="Texture2D" uid="uid://01frajnxqxdd" path="res://Assets/Crosshair2.png" id="8_5qu3p"]
+[ext_resource type="Texture2D" uid="uid://spa2ah6o3rsy" path="res://Assets/Crosshair1.png" id="7_ydbwm"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_qob16"]
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_bqdnq"]
-texture = ExtResource("8_5qu3p")
-modulate_color = Color(1, 1, 1, 0.372549)
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_qcmea"]
 properties/0/path = NodePath(".:position")
@@ -23,13 +19,18 @@ properties/1/path = NodePath(".:rotation")
 properties/1/spawn = true
 properties/1/replication_mode = 1
 
-[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("CAMERA_CONTROLLER", "PLAYERMODEL", "SETTINGSMENU")]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_bqdnq"]
+texture = ExtResource("7_ydbwm")
+modulate_color = Color(1, 1, 1, 0.866667)
+
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("CAMERA_CONTROLLER", "PLAYERMODEL", "SETTINGSMENU", "GUILAYER")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 collision_layer = 2
 script = ExtResource("1_x2rg4")
 CAMERA_CONTROLLER = NodePath("CameraController/Camera3D")
 PLAYERMODEL = NodePath("player_model")
 SETTINGSMENU = NodePath("SettingsMenu")
+GUILAYER = NodePath("GUI Layer")
 
 [node name="player_model" parent="." instance=ExtResource("2_o7d3s")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, -1, 0)
@@ -56,16 +57,28 @@ DASHINGPLAYERSTATE = NodePath("../DashingPlayerState")
 [node name="DashingPlayerState" type="Node" parent="PlayerStateMachine"]
 script = ExtResource("5_l4onx")
 
-[node name="GUI" type="Control" parent="."]
+[node name="SettingsMenu" parent="." instance=ExtResource("7_58hv0")]
+visible = false
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_qcmea")
+
+[node name="GUI Layer" type="CanvasLayer" parent="."]
+
+[node name="GUI" type="Control" parent="GUI Layer"]
 layout_mode = 3
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+mouse_filter = 2
 
-[node name="Crosshair" type="Panel" parent="GUI"]
+[node name="Crosshair" type="Panel" parent="GUI Layer/GUI"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -78,13 +91,8 @@ offset_right = 15.0
 offset_bottom = 15.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_bqdnq")
-
-[node name="SettingsMenu" parent="." instance=ExtResource("7_58hv0")]
-visible = false
-
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
-replication_config = SubResource("SceneReplicationConfig_qcmea")
 
 [connection signal="playerColorChanged" from="SettingsMenu" to="." method="_on_settings_menu_player_color_changed"]
 [connection signal="sensitivityChanged" from="SettingsMenu" to="." method="_on_settings_menu_sensitivity_changed"]
