@@ -1,0 +1,43 @@
+[gd_scene load_steps=7 format=3 uid="uid://dwti7oe1bg3u5"]
+
+[ext_resource type="PackedScene" uid="uid://dydwkhhobgko3" path="res://Scenes/pistol_model.tscn" id="1_t4pxd"]
+[ext_resource type="Script" path="res://Scenes/pistol.gd" id="1_yr8bf"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_1g24x"]
+direction = Vector3(0, 0, 1)
+initial_velocity_min = 1.0
+initial_velocity_max = 1.0
+gravity = Vector3(0, 0, 0)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3x6ot"]
+transparency = 1
+albedo_color = Color(0.768627, 0.0784314, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_jm43s"]
+material = SubResource("StandardMaterial3D_3x6ot")
+size = Vector3(0.1, 0.1, 0.1)
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_nahyc"]
+properties/0/path = NodePath("GPUParticles3D:emitting")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+
+[node name="Pistol" type="Node3D" node_paths=PackedStringArray("PARTICLES", "WEAPON")]
+script = ExtResource("1_yr8bf")
+PARTICLES = NodePath("GPUParticles3D")
+WEAPON = NodePath("pistol_model")
+
+[node name="pistol_model" parent="." instance=ExtResource("1_t4pxd")]
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.43463, 0.0898989, -0.012672)
+emitting = false
+amount = 6
+lifetime = 0.05
+one_shot = true
+fixed_fps = 60
+process_material = SubResource("ParticleProcessMaterial_1g24x")
+draw_pass_1 = SubResource("BoxMesh_jm43s")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_nahyc")

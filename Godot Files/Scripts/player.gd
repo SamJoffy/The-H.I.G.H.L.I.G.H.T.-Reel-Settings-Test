@@ -13,7 +13,9 @@ extends CharacterBody3D
 @export var SETTINGSMENU : Control
 @export var GUILAYER : CanvasLayer
 @export var PRIMARYWEAPON: Weapon
+@export var SECONDARYWEAPON: Weapon
 @export var WEAPONHITBOX: RayCast3D
+@export var WEAPONS: Node3D
 
 
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
@@ -26,7 +28,9 @@ var _current_rotation : float
 var _tilt_input: float = 0.0
 var jump_ready: bool = true
 var health: int = 100
-var weaponReady: bool = true
+var currentWeapon: int = 0
+var weaponSwitchCooldown: float = 0.3
+var canSwitchWeapons: bool = true
 
 var DEFAULTPLAYERCOLOR: GlobalItems.playerColors = GlobalItems.playerColors.RED
 
@@ -74,15 +78,25 @@ func update_input(speed: float, acceleration: float, deceleration: float) -> voi
 		elif SETTINGSMENU.getMenuVisible():
 			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 			SETTINGSMENU.visible = false
-	if Input.is_action_pressed("shoot") and PRIMARYWEAPON.ISAUTOMATIC and weaponReady:
-		PRIMARYWEAPON.emit()
-		if WEAPONHITBOX.is_colliding():
-			WEAPONHITBOX.get_collider().hitPlayer.rpc_id(WEAPONHITBOX.get_collider().get_multiplayer_authority(), PRIMARYWEAPON.DAMAGE)
-		weaponReady = false
-		await get_tree().create_timer(60.0/PRIMARYWEAPON.RATEOFFIRE).timeout
-		weaponReady = true
-	elif Input.is_action_just_pressed("shoot") and not PRIMARYWEAPON.ISAUTOMATIC:
+	
+	if SETTINGSMENU.visible:
 		return
+	if Input.is_action_just_released("switch_weapons") and canSwitchWeapons:
+		if currentWeapon == 0:
+			currentWeapon = 1
+			PRIMARYWEAPON.visible = false
+			SECONDARYWEAPON.visible = true
+		else:
+			currentWeapon = 0
+			PRIMARYWEAPON.visible = true
+			SECONDARYWEAPON.visible = false
+		canSwitchWeapons = false
+		await get_tree().create_timer(weaponSwitchCooldown).timeout
+		canSwitchWeapons = true
+	elif Input.is_action_just_pressed("reload"):
+		WEAPONS.get_child(currentWeapon).reload()
+	elif Input.is_action_pressed("shoot"):
+		WEAPONS.get_child(currentWeapon).fire()
 
 func _physics_process(delta):
 	_update_camera(delta)
