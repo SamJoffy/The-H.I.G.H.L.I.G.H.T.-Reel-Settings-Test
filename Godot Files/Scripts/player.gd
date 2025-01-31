@@ -75,6 +75,7 @@ func update_input(speed: float, acceleration: float, deceleration: float) -> voi
 			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 			SETTINGSMENU.visible = false
 	if Input.is_action_pressed("shoot") and PRIMARYWEAPON.ISAUTOMATIC and weaponReady:
+		PRIMARYWEAPON.emit()
 		if WEAPONHITBOX.is_colliding():
 			WEAPONHITBOX.get_collider().hitPlayer.rpc_id(WEAPONHITBOX.get_collider().get_multiplayer_authority(), PRIMARYWEAPON.DAMAGE)
 		weaponReady = false
@@ -127,6 +128,7 @@ func setPlayerSettings(settings):
 @rpc("any_peer")
 func hitPlayer(damage: int):
 	health -= damage
+	print("Current health: " + str(health))
 	if health <= 0:
 		self.position = Vector3(0, 1, 0)
 		health = 100
