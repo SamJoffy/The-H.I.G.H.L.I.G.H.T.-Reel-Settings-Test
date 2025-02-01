@@ -30,8 +30,7 @@ func add_player(peer_id):
 		player.setPlayerSettings(playerSettings)
 		
 	for i in PLAYERS.get_children():
-		if i.is_multiplayer_authority():
-			changePlayerColors(i.DEFAULTPLAYERCOLOR)
+		changePlayerColors.rpc_id(i.get_multiplayer_authority(), i.DEFAULTPLAYERCOLOR)
 
 func remove_player(peer_id):
 	var player = PLAYERS.get_node_or_null(str(peer_id))
@@ -62,6 +61,7 @@ func upnp_setup():
 	
 	print("Success! Join Address: %s" % upnp.query_external_address())
 
+@rpc("authority", "call_local")
 func changePlayerColors(color: GlobalItems.playerColors):
 	for i in PLAYERS.get_children():
 		i.changeColor(color)
