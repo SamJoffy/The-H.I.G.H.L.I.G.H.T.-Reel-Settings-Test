@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://bstmyxr78cyia"]
+[gd_scene load_steps=17 format=3 uid="uid://bstmyxr78cyia"]
 
 [ext_resource type="Script" path="res://Scripts/player.gd" id="1_x2rg4"]
 [ext_resource type="Script" path="res://Scripts/PlayerStateMachine.gd" id="2_6vqtu"]
@@ -22,6 +22,17 @@ bg_color = Color(0.996945, 6.23293e-06, 1.54018e-06, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hqoqo"]
 bg_color = Color(0.166924, 0.722176, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nypei"]
+bg_color = Color(0.352941, 0.352941, 0.352941, 0.729412)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+expand_margin_left = 5.0
+expand_margin_top = 5.0
+expand_margin_right = 5.0
+expand_margin_bottom = 5.0
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_qcmea"]
 properties/0/path = NodePath(".:position")
@@ -65,14 +76,16 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.85, 0)
 [node name="Weapons" type="Node3D" parent="CameraController/Camera3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.85, 0)
 
-[node name="Rifle" parent="CameraController/Camera3D/Weapons" node_paths=PackedStringArray("HITBOX") instance=ExtResource("9_sa4cd")]
+[node name="Rifle" parent="CameraController/Camera3D/Weapons" node_paths=PackedStringArray("HITBOX", "AMMOLABEL") instance=ExtResource("9_sa4cd")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0.375517, 0.00105405, -0.890692)
 HITBOX = NodePath("../../WeaponHitbox")
+AMMOLABEL = NodePath("../../../../GUI Layer/GUI/AmmoLabel")
 
-[node name="Pistol" parent="CameraController/Camera3D/Weapons" node_paths=PackedStringArray("HITBOX") instance=ExtResource("4_4sf52")]
+[node name="Pistol" parent="CameraController/Camera3D/Weapons" node_paths=PackedStringArray("HITBOX", "AMMOLABEL") instance=ExtResource("4_4sf52")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.52612, 0.231458, -0.54859)
 visible = false
 HITBOX = NodePath("../../WeaponHitbox")
+AMMOLABEL = NodePath("../../../../GUI Layer/GUI/AmmoLabel")
 
 [node name="WeaponHitbox" type="RayCast3D" parent="CameraController/Camera3D"]
 target_position = Vector3(0, 0, -100)
@@ -144,6 +157,18 @@ theme_override_styles/background = SubResource("StyleBoxFlat_tvcc0")
 theme_override_styles/fill = SubResource("StyleBoxFlat_hqoqo")
 value = 100.0
 show_percentage = false
+
+[node name="AmmoLabel" type="Label" parent="GUI Layer/GUI"]
+layout_mode = 0
+offset_left = 1073.0
+offset_top = 583.0
+offset_right = 1116.0
+offset_bottom = 606.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_nypei")
+text = "31/31"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_qcmea")

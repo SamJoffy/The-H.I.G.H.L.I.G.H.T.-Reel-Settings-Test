@@ -47,6 +47,7 @@ func _ready():
 		for i in PLAYERMODEL.get_children():
 			i.set_layer_mask_value(1, false)
 		GUILAYER.visible = true
+		PRIMARYWEAPON.updateAmmo()
 
 func _unhandled_input(event):
 	if not is_multiplayer_authority():
@@ -93,6 +94,7 @@ func update_input(speed: float, acceleration: float, deceleration: float) -> voi
 			PRIMARYWEAPON.visible = true
 			SECONDARYWEAPON.visible = false
 		canSwitchWeapons = false
+		WEAPONS.get_child(currentWeapon).updateAmmo()
 		await get_tree().create_timer(weaponSwitchCooldown).timeout
 		canSwitchWeapons = true
 	elif Input.is_action_just_pressed("reload"):

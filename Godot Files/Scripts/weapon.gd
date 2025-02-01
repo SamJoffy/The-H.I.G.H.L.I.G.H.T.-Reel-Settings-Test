@@ -5,6 +5,7 @@ extends Node
 @export var PARTICLES: GPUParticles3D
 @export var HITBOX: RayCast3D
 @export var WEAPON: Node3D
+@export var AMMOLABEL: Label
 
 var RATEOFFIRE: int
 var DAMAGE: int
@@ -28,13 +29,22 @@ func fire():
 	if AMMOLEFT <= 0:
 		reload()
 	else:
+		updateAmmo()
 		await get_tree().create_timer(60.0/RATEOFFIRE).timeout
 		ISREADY = true
 
+# Currently a bug where reloading, switching weapons, and then switching back
+# before the reload time is up still reloads the weapon. Might keep in as feature
 func reload():
+	updateAmmo()
 	WEAPON.changeColor(RELOADTIME)
 	ISRELOADED = false
 	await get_tree().create_timer(RELOADTIME).timeout
-	AMMOLEFT = MAGAZINESIZE
+	if self.visible:
+		AMMOLEFT = MAGAZINESIZE
+		updateAmmo()
 	ISREADY = true
 	ISRELOADED = true
+
+func updateAmmo():
+	AMMOLABEL.text = str(AMMOLEFT) + "/" + str(MAGAZINESIZE)
