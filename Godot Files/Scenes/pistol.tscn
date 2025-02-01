@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://dwti7oe1bg3u5"]
 
 [ext_resource type="PackedScene" uid="uid://dydwkhhobgko3" path="res://Scenes/pistol_model.tscn" id="1_t4pxd"]
-[ext_resource type="Script" path="res://Scenes/pistol.gd" id="1_yr8bf"]
+[ext_resource type="Script" path="res://Scripts/pistol.gd" id="1_yr8bf"]
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_1g24x"]
 direction = Vector3(0, 0, 1)

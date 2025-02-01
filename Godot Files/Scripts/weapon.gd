@@ -21,6 +21,9 @@ func emit():
 func fire():
 	if not ISREADY or not ISRELOADED:
 		return
+	if AMMOLEFT <= 0:
+		reload()
+		return
 	ISREADY = false
 	AMMOLEFT -= 1
 	emit()
