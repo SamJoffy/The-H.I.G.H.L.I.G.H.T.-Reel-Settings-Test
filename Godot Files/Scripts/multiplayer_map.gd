@@ -32,8 +32,6 @@ func add_player(peer_id):
 	for i in PLAYERS.get_children():
 		if i.is_multiplayer_authority():
 			changePlayerColors(i.DEFAULTPLAYERCOLOR)
-	#if player.is_multiplayer_authority():
-		#player.healthChanged.connect(update_health_bar)
 
 func remove_player(peer_id):
 	var player = PLAYERS.get_node_or_null(str(peer_id))

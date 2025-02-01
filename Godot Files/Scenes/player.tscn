@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://bstmyxr78cyia"]
+[gd_scene load_steps=16 format=3 uid="uid://bstmyxr78cyia"]
 
 [ext_resource type="Script" path="res://Scripts/player.gd" id="1_x2rg4"]
 [ext_resource type="Script" path="res://Scripts/PlayerStateMachine.gd" id="2_6vqtu"]
@@ -17,6 +17,12 @@
 texture = ExtResource("7_ydbwm")
 modulate_color = Color(1, 1, 1, 0.866667)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tvcc0"]
+bg_color = Color(0.996945, 6.23293e-06, 1.54018e-06, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hqoqo"]
+bg_color = Color(0.166924, 0.722176, 0, 1)
+
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_qcmea"]
 properties/0/path = NodePath(".:position")
 properties/0/spawn = true
@@ -31,7 +37,7 @@ properties/3/path = NodePath("CameraController/Camera3D/Weapons/Pistol:visible")
 properties/3/spawn = true
 properties/3/replication_mode = 1
 
-[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("CAMERA_CONTROLLER", "PLAYERMODEL", "SETTINGSMENU", "GUILAYER", "PRIMARYWEAPON", "SECONDARYWEAPON", "WEAPONHITBOX", "WEAPONS")]
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("CAMERA_CONTROLLER", "PLAYERMODEL", "SETTINGSMENU", "GUILAYER", "PRIMARYWEAPON", "SECONDARYWEAPON", "WEAPONHITBOX", "WEAPONS", "HEALTHBAR")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 collision_layer = 2
 script = ExtResource("1_x2rg4")
@@ -43,6 +49,7 @@ PRIMARYWEAPON = NodePath("CameraController/Camera3D/Weapons/Rifle")
 SECONDARYWEAPON = NodePath("CameraController/Camera3D/Weapons/Pistol")
 WEAPONHITBOX = NodePath("CameraController/Camera3D/WeaponHitbox")
 WEAPONS = NodePath("CameraController/Camera3D/Weapons")
+HEALTHBAR = NodePath("GUI Layer/GUI/HealthBar")
 
 [node name="player_model" parent="." instance=ExtResource("2_o7d3s")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, -1, 0)
@@ -89,14 +96,13 @@ script = ExtResource("5_l4onx")
 visible = false
 
 [node name="GUI Layer" type="CanvasLayer" parent="."]
+visible = false
 
 [node name="GUI" type="Control" parent="GUI Layer"]
 layout_mode = 3
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
@@ -118,6 +124,26 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_bqdnq")
+
+[node name="HealthBar" type="ProgressBar" parent="GUI Layer/GUI"]
+custom_minimum_size = Vector2(500, 40)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -250.0
+offset_top = -84.0
+offset_right = 250.0
+offset_bottom = -44.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_tvcc0")
+theme_override_styles/fill = SubResource("StyleBoxFlat_hqoqo")
+value = 100.0
+show_percentage = false
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_qcmea")

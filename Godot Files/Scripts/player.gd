@@ -16,6 +16,7 @@ extends CharacterBody3D
 @export var SECONDARYWEAPON: Weapon
 @export var WEAPONHITBOX: RayCast3D
 @export var WEAPONS: Node3D
+@export var HEALTHBAR: ProgressBar
 
 
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
@@ -45,6 +46,7 @@ func _ready():
 	if is_multiplayer_authority():
 		for i in PLAYERMODEL.get_children():
 			i.set_layer_mask_value(1, false)
+		GUILAYER.visible = true
 
 func _unhandled_input(event):
 	if not is_multiplayer_authority():
@@ -146,3 +148,5 @@ func hitPlayer(damage: int):
 	if health <= 0:
 		self.position = Vector3(0, 1, 0)
 		health = 100
+	if is_multiplayer_authority():
+		HEALTHBAR.value = health
