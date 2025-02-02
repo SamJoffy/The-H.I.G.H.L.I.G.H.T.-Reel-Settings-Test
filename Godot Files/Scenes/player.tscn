@@ -47,6 +47,9 @@ properties/2/replication_mode = 1
 properties/3/path = NodePath("CameraController/Camera3D/Weapons/Pistol:visible")
 properties/3/spawn = true
 properties/3/replication_mode = 1
+properties/4/path = NodePath(".:health")
+properties/4/spawn = true
+properties/4/replication_mode = 1
 
 [node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("CAMERA_CONTROLLER", "PLAYERMODEL", "SETTINGSMENU", "GUILAYER", "PRIMARYWEAPON", "SECONDARYWEAPON", "WEAPONHITBOX", "WEAPONS", "HEALTHBAR")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -173,5 +176,7 @@ vertical_alignment = 1
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_qcmea")
 
+[connection signal="killedPlayer" from="CameraController/Camera3D/Weapons/Rifle" to="." method="_on_killed_player"]
+[connection signal="killedPlayer" from="CameraController/Camera3D/Weapons/Pistol" to="." method="_on_killed_player"]
 [connection signal="playerColorChanged" from="SettingsMenu" to="." method="_on_settings_menu_player_color_changed"]
 [connection signal="sensitivityChanged" from="SettingsMenu" to="." method="_on_settings_menu_sensitivity_changed"]

@@ -15,6 +15,8 @@ var ISREADY: bool = true
 var ISRELOADED: bool = true
 var AMMOLEFT: int
 
+signal killedPlayer
+
 func emit():
 	PARTICLES.emitting = true
 
@@ -28,7 +30,9 @@ func fire():
 	AMMOLEFT -= 1
 	emit()
 	if HITBOX.is_colliding():
-			HITBOX.get_collider().hitPlayer.rpc_id(HITBOX.get_collider().get_multiplayer_authority(), DAMAGE)
+		if HITBOX.get_collider().getHealth() - DAMAGE <= 0:
+			killedPlayer.emit()
+		HITBOX.get_collider().hitPlayer.rpc_id(HITBOX.get_collider().get_multiplayer_authority(), DAMAGE)
 	if AMMOLEFT <= 0:
 		reload()
 	else:

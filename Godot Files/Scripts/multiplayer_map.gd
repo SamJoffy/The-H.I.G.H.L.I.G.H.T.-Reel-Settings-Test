@@ -12,6 +12,7 @@ var playerSettings
 var enet_peer = ENetMultiplayerPeer.new()
 const PORT: int = 9999
 
+
 func startHost():
 	enet_peer.create_server(PORT)
 	multiplayer.multiplayer_peer = enet_peer
@@ -26,12 +27,12 @@ func add_player(peer_id):
 	var player = player_scene.instantiate()
 	player.name = str(peer_id)
 	PLAYERS.add_child(player)
+	SCOREBOARD.addPlayer(peer_id)
 	
 	
 	if player.is_multiplayer_authority():
 		player.playerColorChanged.connect(changePlayerColors)
 		player.setPlayerSettings(playerSettings)
-		SCOREBOARD.addPlayer()
 		
 		
 	for i in PLAYERS.get_children():
@@ -77,7 +78,6 @@ func _on_multiplayer_spawner_spawned(node):
 		node.setPlayerSettings(playerSettings)
 		node.playerColorChanged.connect(changePlayerColors)
 		changePlayerColors(node.DEFAULTPLAYERCOLOR)
-		SCOREBOARD.addPlayer()
 
 func setPlayerSettings(settings):
 	playerSettings = settings

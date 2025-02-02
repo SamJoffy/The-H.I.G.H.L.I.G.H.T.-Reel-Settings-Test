@@ -28,7 +28,7 @@ var _camera_rotation : Vector3
 var _current_rotation : float
 var _tilt_input: float = 0.0
 var jump_ready: bool = true
-var health: int = 100
+@export var health: int = 100
 var currentWeapon: int = 0
 var weaponSwitchCooldown: float = 0.3
 var canSwitchWeapons: bool = true
@@ -36,6 +36,8 @@ var canSwitchWeapons: bool = true
 var DEFAULTPLAYERCOLOR: GlobalItems.playerColors = GlobalItems.playerColors.RED
 
 signal playerColorChanged(color: GlobalItems.playerColors)
+signal playerKilled(name: int)
+signal playerDead(name: int)
 
 func _enter_tree():
 	set_multiplayer_authority(str(name).to_int())
@@ -146,9 +148,16 @@ func setPlayerSettings(settings):
 @rpc("any_peer")
 func hitPlayer(damage: int):
 	health -= damage
-	print("Current health: " + str(health))
 	if health <= 0:
+		SignalBus.playerDied.emit(int(str(self.name)))
 		self.position = Vector3(0, 1, 0)
 		health = 100
 	if is_multiplayer_authority():
 		HEALTHBAR.value = health
+
+func getHealth():
+	return health
+
+
+func _on_killed_player():
+	SignalBus.playerKill.emit(int(str(self.name)))
