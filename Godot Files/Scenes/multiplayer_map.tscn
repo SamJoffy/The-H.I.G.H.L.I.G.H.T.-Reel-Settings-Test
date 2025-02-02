@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://dsqtnbbtn1chc"]
+[gd_scene load_steps=8 format=3 uid="uid://dsqtnbbtn1chc"]
 
 [ext_resource type="PackedScene" uid="uid://b5rrfkuurg01s" path="res://Scenes/wall.tscn" id="1_1v6ow"]
 [ext_resource type="Script" path="res://Scripts/multiplayer_map.gd" id="1_nr5pi"]
 [ext_resource type="PackedScene" uid="uid://bstmyxr78cyia" path="res://Scenes/player.tscn" id="2_1ycna"]
+[ext_resource type="PackedScene" uid="uid://coecjvyr6jklk" path="res://Scenes/scoreboard.tscn" id="4_qd23i"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_i17qu"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -17,10 +18,11 @@ sky = SubResource("Sky_chsfm")
 tonemap_mode = 2
 glow_enabled = true
 
-[node name="MultiplayerMap" type="Node3D" node_paths=PackedStringArray("PLAYERS")]
+[node name="MultiplayerMap" type="Node3D" node_paths=PackedStringArray("PLAYERS", "SCOREBOARD")]
 script = ExtResource("1_nr5pi")
 player_scene = ExtResource("2_1ycna")
 PLAYERS = NodePath("Players")
+SCOREBOARD = NodePath("Scoreboard")
 
 [node name="Sun" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
@@ -45,5 +47,8 @@ _spawnable_scenes = PackedStringArray("res://Scenes/player.tscn")
 spawn_path = NodePath("../Players")
 
 [node name="Players" type="Node" parent="."]
+
+[node name="Scoreboard" parent="." instance=ExtResource("4_qd23i")]
+visible = false
 
 [connection signal="spawned" from="MultiplayerSpawner" to="." method="_on_multiplayer_spawner_spawned"]

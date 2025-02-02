@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://bstmyxr78cyia"]
+[gd_scene load_steps=17 format=3 uid="uid://bstmyxr78cyia"]
 
 [ext_resource type="Script" path="res://Scripts/player.gd" id="1_x2rg4"]
 [ext_resource type="Script" path="res://Scripts/PlayerStateMachine.gd" id="2_6vqtu"]
@@ -10,7 +10,6 @@
 [ext_resource type="PackedScene" uid="uid://c5qbgq8xcgw01" path="res://Scenes/settings_menu.tscn" id="7_58hv0"]
 [ext_resource type="Texture2D" uid="uid://spa2ah6o3rsy" path="res://Assets/Crosshair1.png" id="7_ydbwm"]
 [ext_resource type="PackedScene" uid="uid://cm3jw2aqt6d02" path="res://Scenes/rifle.tscn" id="9_sa4cd"]
-[ext_resource type="PackedScene" uid="uid://coecjvyr6jklk" path="res://Scenes/scoreboard.tscn" id="11_mopfv"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_qob16"]
 
@@ -110,6 +109,7 @@ script = ExtResource("5_l4onx")
 visible = false
 
 [node name="GUI Layer" type="CanvasLayer" parent="."]
+visible = false
 
 [node name="GUI" type="Control" parent="GUI Layer"]
 layout_mode = 3
@@ -169,9 +169,6 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_nypei")
 text = "31/31"
 horizontal_alignment = 1
 vertical_alignment = 1
-
-[node name="Scoreboard" parent="GUI Layer/GUI" instance=ExtResource("11_mopfv")]
-layout_mode = 1
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_qcmea")

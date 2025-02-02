@@ -3,9 +3,6 @@ extends Control
 @export var VBOX: VBoxContainer
 var playerStats: PackedScene = preload("res://Scenes/player_stats.tscn")
 
-func _ready():
-	addPlayer()
-
 func addPlayer():
 	VBOX.add_child(playerStats.instantiate())
 

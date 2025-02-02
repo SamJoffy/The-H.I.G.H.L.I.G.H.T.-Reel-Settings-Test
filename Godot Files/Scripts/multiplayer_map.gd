@@ -5,6 +5,7 @@ extends Node3D
 
 @export var player_scene : PackedScene
 @export var PLAYERS: Node
+@export var SCOREBOARD: Control
 
 var playerSettings
 
@@ -25,9 +26,13 @@ func add_player(peer_id):
 	var player = player_scene.instantiate()
 	player.name = str(peer_id)
 	PLAYERS.add_child(player)
+	
+	
 	if player.is_multiplayer_authority():
 		player.playerColorChanged.connect(changePlayerColors)
 		player.setPlayerSettings(playerSettings)
+		SCOREBOARD.addPlayer()
+		
 		
 	for i in PLAYERS.get_children():
 		changePlayerColors.rpc_id(i.get_multiplayer_authority(), i.DEFAULTPLAYERCOLOR)
@@ -35,6 +40,7 @@ func add_player(peer_id):
 func remove_player(peer_id):
 	var player = PLAYERS.get_node_or_null(str(peer_id))
 	if player:
+		SCOREBOARD.removePlayer(player.name)
 		player.queue_free()
 
 func startJoinLocal():
@@ -71,6 +77,13 @@ func _on_multiplayer_spawner_spawned(node):
 		node.setPlayerSettings(playerSettings)
 		node.playerColorChanged.connect(changePlayerColors)
 		changePlayerColors(node.DEFAULTPLAYERCOLOR)
+		SCOREBOARD.addPlayer()
 
 func setPlayerSettings(settings):
 	playerSettings = settings
+
+func _process(delta):
+	if Input.is_action_pressed("open_scoreboard"):
+		SCOREBOARD.visible = true
+	else:
+		SCOREBOARD.visible = false
