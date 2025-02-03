@@ -93,11 +93,11 @@ func _process(delta):
 	else:
 		SCOREBOARD.visible = false
 
-@rpc("any_peer")
+@rpc("any_peer", "call_local")
 func addDeath(playerName: int):
 	SCOREBOARD.addDeath(playerName)
 
-@rpc("any_peer")
+@rpc("any_peer", "call_local")
 func addKill(playerName: int):
 	SCOREBOARD.addKill(playerName)
 
