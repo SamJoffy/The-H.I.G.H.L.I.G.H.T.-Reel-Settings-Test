@@ -19,6 +19,7 @@ func startHost():
 	multiplayer.peer_connected.connect(add_player)
 	multiplayer.peer_disconnected.connect(remove_player)
 	
+	
 	add_player(multiplayer.get_unique_id())
 	
 	upnp_setup()
@@ -33,6 +34,8 @@ func add_player(peer_id):
 	if player.is_multiplayer_authority():
 		player.playerColorChanged.connect(changePlayerColors)
 		player.setPlayerSettings(playerSettings)
+		SignalBus.playerDied.connect(addDeathOne)
+		SignalBus.playerKill.connect(addKillOne)
 		
 		
 	for i in PLAYERS.get_children():
@@ -78,6 +81,8 @@ func _on_multiplayer_spawner_spawned(node):
 		node.setPlayerSettings(playerSettings)
 		node.playerColorChanged.connect(changePlayerColors)
 		changePlayerColors(node.DEFAULTPLAYERCOLOR)
+		SignalBus.playerDied.connect(addDeathOne)
+		SignalBus.playerKill.connect(addKillOne)
 
 func setPlayerSettings(settings):
 	playerSettings = settings
@@ -87,3 +92,26 @@ func _process(delta):
 		SCOREBOARD.visible = true
 	else:
 		SCOREBOARD.visible = false
+
+@rpc("any_peer")
+func addDeath(playerName: int):
+	SCOREBOARD.addDeath(playerName)
+
+@rpc("any_peer")
+func addKill(playerName: int):
+	SCOREBOARD.addKill(playerName)
+
+
+func addDeathOne(playerName: int):
+	print("addKillOne multiplayer Authority: " + str(get_multiplayer_authority()))
+	if get_multiplayer_authority() == 1:
+		addDeath(playerName)
+	else:
+		addDeath.rpc_id(1, playerName)
+
+func addKillOne(playerName: int):
+	print("addKillOne multiplayer Authority: " + str(get_multiplayer_authority()))
+	if get_multiplayer_authority() == 1:
+		addKill(playerName)
+	else:
+		addKill.rpc_id(1, playerName)

@@ -8,12 +8,12 @@ var numKills: int = 0
 var numDeaths: int = 0
 
 func addKill():
-	print("AddKill playerstats: " + NAME.text)
+	print("AddKill playerstats: " + NAME.text + ". Multiplayer Authority: " + str(get_multiplayer_authority()))
 	numKills += 1
 	KILLS.text = str(numKills)
 
 func addDeath():
-	print("AddDeath playerstats: " + NAME.text)
+	print("AddDeath playerstats: " + NAME.text + ". Multiplayer Authority: " + str(get_multiplayer_authority()))
 	numDeaths += 1
 	DEATHS.text = str(numDeaths)
 

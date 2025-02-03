@@ -3,11 +3,6 @@ extends Control
 @export var VBOX: VBoxContainer
 var playerStats: PackedScene = preload("res://Scenes/player_stats.tscn")
 
-func _ready():
-	SignalBus.playerDied.connect(addDeath)
-	SignalBus.playerKill.connect(addKill)
-
-
 func addPlayer(peer_id: int):
 	var newStats = playerStats.instantiate()
 	newStats.setName(str(peer_id))
