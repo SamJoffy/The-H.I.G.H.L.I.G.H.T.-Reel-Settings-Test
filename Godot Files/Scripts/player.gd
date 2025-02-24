@@ -5,7 +5,7 @@ extends CharacterBody3D
 
 @export var JUMP_VELOCITY: float = 6.0
 @export var SPEED: float = 10.0
-@export var MOUSE_SENSITIVITY : float = 1.3
+@export var MOUSE_SENSITIVITY : float = 0.6
 @export var TILT_LOWER_LIMIT := deg_to_rad(-90.0)
 @export var TILT_UPPER_LIMIT := deg_to_rad(90.0)
 @export var CAMERA_CONTROLLER : Camera3D
@@ -133,7 +133,7 @@ func update_gravity(delta) -> void:
 	velocity.y -= gravity * delta
 
 func _on_settings_menu_sensitivity_changed(sens):
-	MOUSE_SENSITIVITY = 1 + (sens/100)
+	MOUSE_SENSITIVITY = 0.3 + (sens/100)
 
 func _on_settings_menu_player_color_changed(color):
 	DEFAULTPLAYERCOLOR = color
