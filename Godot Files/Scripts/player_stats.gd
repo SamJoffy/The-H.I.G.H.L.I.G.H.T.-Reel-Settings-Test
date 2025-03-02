@@ -11,13 +11,13 @@ func addKill():
 	print("AddKill playerstats: " + NAME.text + ". Multiplayer Authority: " + str(get_multiplayer_authority()))
 	numKills += 1
 	KILLS.text = str(numKills)
-	SignalBus.scoreBoardUpdated.emit(self.name, numKills, numDeaths)
+	SignalBus.scoreBoardUpdated.emit(int(str(self.name)), numKills, numDeaths)
 
 func addDeath():
 	print("AddDeath playerstats: " + NAME.text + ". Multiplayer Authority: " + str(get_multiplayer_authority()))
 	numDeaths += 1
 	DEATHS.text = str(numDeaths)
-	SignalBus.scoreBoardUpdated.emit(self.name, numKills, numDeaths)
+	SignalBus.scoreBoardUpdated.emit(int(str(self.name)), numKills, numDeaths)
 
 func setName(name: String):
 	NAME.text = name

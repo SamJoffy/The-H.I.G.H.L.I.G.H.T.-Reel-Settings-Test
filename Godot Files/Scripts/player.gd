@@ -12,6 +12,7 @@ extends CharacterBody3D
 @export var PLAYERMODEL : Node3D
 @export var SETTINGSMENU : Control
 @export var GUILAYER : CanvasLayer
+@export var SCOREBOARD: Control
 @export var PRIMARYWEAPON: Weapon
 @export var SECONDARYWEAPON: Weapon
 @export var WEAPONHITBOX: RayCast3D
@@ -83,6 +84,11 @@ func update_input(speed: float, acceleration: float, deceleration: float) -> voi
 		elif SETTINGSMENU.getMenuVisible():
 			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 			SETTINGSMENU.visible = false
+	
+	if Input.is_action_pressed("open_scoreboard") and (not SETTINGSMENU.visible) and is_multiplayer_authority():
+		SCOREBOARD.visible = true
+	else:
+		SCOREBOARD.visible = false
 	
 	if SETTINGSMENU.visible:
 		return
