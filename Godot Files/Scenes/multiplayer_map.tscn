@@ -18,10 +18,11 @@ sky = SubResource("Sky_chsfm")
 tonemap_mode = 2
 glow_enabled = true
 
-[node name="MultiplayerMap" type="Node3D" node_paths=PackedStringArray("PLAYERS")]
+[node name="MultiplayerMap" type="Node3D" node_paths=PackedStringArray("PLAYERS", "scoreBoard")]
 script = ExtResource("1_nr5pi")
 player_scene = ExtResource("2_1ycna")
 PLAYERS = NodePath("Players")
+scoreBoard = NodePath("Scoreboard")
 
 [node name="Sun" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)

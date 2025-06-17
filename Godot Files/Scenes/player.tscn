@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://bstmyxr78cyia"]
+[gd_scene load_steps=17 format=3 uid="uid://bstmyxr78cyia"]
 
 [ext_resource type="Script" uid="uid://paatj0nu1nxr" path="res://Scripts/player.gd" id="1_x2rg4"]
 [ext_resource type="Script" uid="uid://b2hcng36yn3ng" path="res://Scripts/PlayerStateMachine.gd" id="2_6vqtu"]
@@ -10,7 +10,6 @@
 [ext_resource type="PackedScene" uid="uid://c5qbgq8xcgw01" path="res://Scenes/settings_menu.tscn" id="7_58hv0"]
 [ext_resource type="Texture2D" uid="uid://spa2ah6o3rsy" path="res://Assets/Crosshair1.png" id="7_ydbwm"]
 [ext_resource type="PackedScene" uid="uid://cm3jw2aqt6d02" path="res://Scenes/rifle.tscn" id="9_sa4cd"]
-[ext_resource type="PackedScene" uid="uid://coecjvyr6jklk" path="res://Scenes/scoreboard.tscn" id="11_6hq0u"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_qob16"]
 
@@ -52,7 +51,7 @@ properties/4/path = NodePath(".:health")
 properties/4/spawn = true
 properties/4/replication_mode = 1
 
-[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("CAMERA_CONTROLLER", "PLAYERMODEL", "SETTINGSMENU", "GUILAYER", "SCOREBOARD", "PRIMARYWEAPON", "SECONDARYWEAPON", "WEAPONHITBOX", "WEAPONS", "HEALTHBAR")]
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("CAMERA_CONTROLLER", "PLAYERMODEL", "SETTINGSMENU", "GUILAYER", "PRIMARYWEAPON", "SECONDARYWEAPON", "WEAPONHITBOX", "WEAPONS", "HEALTHBAR")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 collision_layer = 2
 script = ExtResource("1_x2rg4")
@@ -60,7 +59,6 @@ CAMERA_CONTROLLER = NodePath("CameraController/Camera3D")
 PLAYERMODEL = NodePath("player_model")
 SETTINGSMENU = NodePath("SettingsMenu")
 GUILAYER = NodePath("GUI Layer")
-SCOREBOARD = NodePath("Scoreboard")
 PRIMARYWEAPON = NodePath("CameraController/Camera3D/Weapons/Rifle")
 SECONDARYWEAPON = NodePath("CameraController/Camera3D/Weapons/Pistol")
 WEAPONHITBOX = NodePath("CameraController/Camera3D/WeaponHitbox")
@@ -177,9 +175,6 @@ vertical_alignment = 1
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_qcmea")
-
-[node name="Scoreboard" parent="." instance=ExtResource("11_6hq0u")]
-visible = false
 
 [connection signal="killedPlayer" from="CameraController/Camera3D/Weapons/Rifle" to="." method="_on_killed_player"]
 [connection signal="killedPlayer" from="CameraController/Camera3D/Weapons/Pistol" to="." method="_on_killed_player"]

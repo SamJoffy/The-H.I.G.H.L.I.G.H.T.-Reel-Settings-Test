@@ -14,7 +14,7 @@ corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_y3ev4"]
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_vjobs"]
 properties/0/path = NodePath("Panel/HBoxContainer/Name:text")
 properties/0/spawn = true
 properties/0/replication_mode = 1
@@ -81,4 +81,4 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
-replication_config = SubResource("SceneReplicationConfig_y3ev4")
+replication_config = SubResource("SceneReplicationConfig_vjobs")

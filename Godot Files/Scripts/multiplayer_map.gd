@@ -5,6 +5,7 @@ extends Node3D
 
 @export var player_scene : PackedScene
 @export var PLAYERS: Node
+@export var scoreBoard: Scoreboard
 
 var playerSettings
 
@@ -28,6 +29,7 @@ func add_player(peer_id):
 	var player = player_scene.instantiate()
 	player.name = str(peer_id)
 	PLAYERS.add_child(player)
+	player.SCOREBOARD = $Scoreboard
 	SignalBus.addPlayer.emit(peer_id)
 	
 	

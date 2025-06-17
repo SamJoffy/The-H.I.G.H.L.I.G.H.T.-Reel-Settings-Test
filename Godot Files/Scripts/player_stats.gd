@@ -30,3 +30,10 @@ func setDeaths(deaths: int):
 func setKills(kills: int):
 	numKills = kills
 	KILLS.text = str(numKills)
+	
+func updateStats(stats: Dictionary):
+	KILLS.text = str(stats["kills"])
+	DEATHS.text = str(stats["deaths"])
+	
+func spawn_function(n: int):
+	name = str(n)
