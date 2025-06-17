@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://coecjvyr6jklk"]
 
-[ext_resource type="Script" path="res://Scripts/scoreboard.gd" id="1_stlq6"]
+[ext_resource type="Script" uid="uid://evdww8rcaoy1" path="res://Scripts/scoreboard.gd" id="1_stlq6"]
 
 [node name="Scoreboard" type="Control" node_paths=PackedStringArray("VBOX")]
 layout_mode = 3

@@ -43,5 +43,3 @@ func updateScoreBoard(name: int, kills: int, deaths: int):
 			i.setKills(kills)
 			i.setDeaths(deaths)
 			return
-
-

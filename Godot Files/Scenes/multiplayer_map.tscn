@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://dsqtnbbtn1chc"]
 
 [ext_resource type="PackedScene" uid="uid://b5rrfkuurg01s" path="res://Scenes/wall.tscn" id="1_1v6ow"]
-[ext_resource type="Script" path="res://Scripts/multiplayer_map.gd" id="1_nr5pi"]
+[ext_resource type="Script" uid="uid://c55dvh2nu8lw2" path="res://Scripts/multiplayer_map.gd" id="1_nr5pi"]
 [ext_resource type="PackedScene" uid="uid://bstmyxr78cyia" path="res://Scenes/player.tscn" id="2_1ycna"]
 [ext_resource type="PackedScene" uid="uid://coecjvyr6jklk" path="res://Scenes/scoreboard.tscn" id="4_qd23i"]
 
@@ -42,7 +42,7 @@ transform = Transform3D(-8.74228e-08, 0, 1, 0, 1, 0, -2, 0, -4.37114e-08, 6.656,
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.79709, -9.42513)
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
-_spawnable_scenes = PackedStringArray("res://Scenes/player.tscn")
+_spawnable_scenes = PackedStringArray("uid://bstmyxr78cyia")
 spawn_path = NodePath("../Players")
 
 [node name="Players" type="Node" parent="."]

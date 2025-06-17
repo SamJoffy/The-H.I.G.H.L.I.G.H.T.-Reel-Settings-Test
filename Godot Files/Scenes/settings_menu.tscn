@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://c5qbgq8xcgw01"]
 
-[ext_resource type="Script" path="res://Scripts/settings_menu.gd" id="1_8ri8k"]
+[ext_resource type="Script" uid="uid://c5hlti4yrvega" path="res://Scripts/settings_menu.gd" id="1_8ri8k"]
 [ext_resource type="PackedScene" uid="uid://c0ycv5tnl0734" path="res://Scenes/options.tscn" id="2_ln1sc"]
 
 [node name="SettingsMenu" type="Control" node_paths=PackedStringArray("OPTIONS", "MENU")]

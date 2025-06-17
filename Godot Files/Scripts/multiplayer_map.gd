@@ -82,4 +82,3 @@ func _on_multiplayer_spawner_spawned(node):
 
 func setPlayerSettings(settings):
 	playerSettings = settings
-
