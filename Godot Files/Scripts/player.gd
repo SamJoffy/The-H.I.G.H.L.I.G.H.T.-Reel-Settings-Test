@@ -86,9 +86,9 @@ func update_input(speed: float, acceleration: float, deceleration: float) -> voi
 			SETTINGSMENU.visible = false
 	
 	if Input.is_action_pressed("open_scoreboard") and (not SETTINGSMENU.visible) and is_multiplayer_authority():
-		SCOREBOARD.visible = true
+		SignalBus.openScoreboard.emit()
 	else:
-		SCOREBOARD.visible = false
+		SignalBus.closeScoreboard.emit()
 	
 	if SETTINGSMENU.visible:
 		return

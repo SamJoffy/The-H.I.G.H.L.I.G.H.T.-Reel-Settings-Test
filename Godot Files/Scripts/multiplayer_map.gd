@@ -22,7 +22,7 @@ func startHost():
 	
 	add_player(multiplayer.get_unique_id())
 	
-	#todo: RE-ADD BEFORE RELEASE
+	#Todo: RE-ADD BEFORE RELEASE
 	#upnp_setup() 
 
 func add_player(peer_id):
