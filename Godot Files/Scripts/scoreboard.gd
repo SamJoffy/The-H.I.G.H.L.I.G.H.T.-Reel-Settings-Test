@@ -7,28 +7,19 @@ extends Control
 @export var SettingsMenu: Control
 @export var playerStats: PackedScene
 @export var players: Node
-static var stats: Dictionary = {}
-
+	
 func _ready():
-	SignalBus.playerDied.connect(addDeath)
-	SignalBus.playerKill.connect(addKill)
-	#SignalBus.scoreBoardUpdated.connect(updateScoreBoard)
-	#SignalBus.addPlayer.connect(addPlayer)
-	#SignalBus.removePlayer.connect(removePlayer)
+	SignalBus.addPlayer.connect(addPlayer)
+	SignalBus.removePlayer.connect(removePlayer)
 	SignalBus.openScoreboard.connect(setVisible)
 	SignalBus.closeScoreboard.connect(setInvisible)
-	multiplayer.peer_connected.connect(addPlayer)
-	multiplayer.peer_disconnected.connect(removePlayer)
-	stats[str(1) + "sb"] = {"kills": 0, "deaths": 0}
-	var newStats = playerStats.instantiate()
-	newStats.setName(str(1) + "sb")
-	VBOX.add_child(newStats)
+	SignalBus.playerDied.connect(addDeath)
+	SignalBus.playerKill.connect(addKill)
 
 
 func addPlayer(peer_id: int) -> void:
 	for i in players.get_children():
 		if i.is_multiplayer_authority():
-			stats[str(peer_id) + "sb"] = {"kills": 0, "deaths": 0}
 			var newStats = playerStats.instantiate()
 			newStats.setName(str(peer_id) + "sb")
 			VBOX.add_child(newStats)
@@ -36,23 +27,28 @@ func addPlayer(peer_id: int) -> void:
 func removePlayer(playerName: int):
 	for i in VBOX.get_children():
 		if i.name == str(playerName) + "sb":
-			stats.erase(i.name)
 			i.queue_free()
 			return
 
+@rpc("any_peer", "call_local", "reliable")
 func addKill(playerName: int):
-	print("Adding kill for player " + str(playerName))
-	stats[str(playerName) + "sb"]["kills"] += 1
-	print(stats)
-
-func addDeath(playerName: int):
-	stats[str(playerName) + "sb"]["deaths"] += 1
-
-func _process(delta: float) -> void:
+	if not multiplayer.is_server():
+		rpc_id(1, "addKill", playerName)
+		return
 	for i in VBOX.get_children():
-		if (i != $VBoxContainer/HBoxContainer and stats.size() > 0):
-			if (stats.has(i.name)):
-				i.updateStats.rpc(stats.get(i.name))	
+		if i.name == str(playerName) + "sb":
+			i.addKill()
+			return
+
+@rpc("any_peer", "call_local", "reliable")
+func addDeath(playerName: int):
+	if not multiplayer.is_server():
+		rpc_id(1, "addDeath", playerName)
+		return
+	for i in VBOX.get_children():
+		if i.name == str(playerName) + "sb":
+			i.addDeath()
+			return
 
 func setVisible() -> void:
 	visible = true

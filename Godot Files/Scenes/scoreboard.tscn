@@ -1,12 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://coecjvyr6jklk"]
+[gd_scene load_steps=3 format=3 uid="uid://coecjvyr6jklk"]
 
 [ext_resource type="Script" uid="uid://evdww8rcaoy1" path="res://Scripts/scoreboard.gd" id="1_stlq6"]
 [ext_resource type="PackedScene" uid="uid://dgoi4gae82lli" path="res://Scenes/player_stats.tscn" id="2_7bodn"]
-
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_53buj"]
-properties/0/path = NodePath(".:stats")
-properties/0/spawn = true
-properties/0/replication_mode = 1
 
 [node name="Scoreboard" type="Control" node_paths=PackedStringArray("VBOX")]
 layout_mode = 3
@@ -60,6 +55,3 @@ horizontal_alignment = 1
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
 _spawnable_scenes = PackedStringArray("uid://dgoi4gae82lli")
 spawn_path = NodePath("../VBoxContainer")
-
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
-replication_config = SubResource("SceneReplicationConfig_53buj")

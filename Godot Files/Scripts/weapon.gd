@@ -10,7 +10,7 @@ extends Node
 var RATEOFFIRE: int
 var DAMAGE: int
 var RELOADTIME: float
-var MAGAZINESIZE: float
+var MAGAZINESIZE: int
 var ISREADY: bool = true
 var ISRELOADED: bool = true
 var AMMOLEFT: int
